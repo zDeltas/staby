@@ -13,7 +13,6 @@ namespace Staby
     {
         private Main mainForm;
         private Overlay overlayForm;
-        public Rectangle overrideBounds = new Rectangle(0, 0, 0, 0);
         public int smoothingStrength = 30;
         public int smoothingInterpolation = 4;
         public int overlayScreen = 0;
@@ -26,6 +25,7 @@ namespace Staby
         public bool disableCatchUp = false;
         public bool snapToCursor = false;
         public bool disableAutoDetection = false;
+        public int mouseAction = 0;
 
         public Config(Main m, Overlay o)
         {
@@ -38,7 +38,6 @@ namespace Staby
         {
             if (def)
             {
-                overrideBounds = new Rectangle(0, 0, 0, 0);
                 smoothingStrength = 30;
                 smoothingInterpolation = 4;
                 overlayScreen = 0;
@@ -63,7 +62,6 @@ namespace Staby
                 overlayForm.cursorType = Overlay.CursorType.Bullseye;
                 overlayForm.Show();
                 overlayForm.Bounds = Screen.PrimaryScreen.Bounds;
-                mainForm.button_colorDialog.BackColor = overlayForm.cursorColor;
 
             }
             else
@@ -93,13 +91,9 @@ namespace Staby
                     disableOverlay = bool.Parse(config.AppSettings.Settings["Disable Overlay"].Value);
                     allScreens = bool.Parse(config.AppSettings.Settings["All Screens"].Value);
                     manualOverlayOverride = bool.Parse(config.AppSettings.Settings["Manual Overlay Override"].Value);
-                    RectangleConverter r = new RectangleConverter();
-                    overrideBounds = (Rectangle)r.ConvertFromString(config.AppSettings.Settings["Override Bounds"].Value);
                     if (disableOverlay) overlayForm.Hide();
                     overlayForm.Bounds = Screen.AllScreens[overlayScreen].Bounds;
                     if (allScreens) overlayForm.Bounds = new Rectangle(0, 0, SystemInformation.VirtualScreen.Width, SystemInformation.VirtualScreen.Height);
-                    if (manualOverlayOverride) overlayForm.Bounds = overrideBounds;
-                    mainForm.button_colorDialog.BackColor = overlayForm.cursorColor;
 
                     // ...and everything else
                     disableCatchUp = bool.Parse(config.AppSettings.Settings["Disable Catch Up"].Value);
@@ -134,8 +128,6 @@ namespace Staby
             config.AppSettings.Settings.Remove("Manual Overlay Override");
             config.AppSettings.Settings.Add("Manual Overlay Override", manualOverlayOverride.ToString());
             config.AppSettings.Settings.Remove("Override Bounds");
-            RectangleConverter r = new RectangleConverter();
-            config.AppSettings.Settings.Add("Override Bounds", r.ConvertToString(overrideBounds));
             config.AppSettings.Settings.Remove("Disable Catch Up");
             config.AppSettings.Settings.Add("Disable Catch Up", disableCatchUp.ToString());
             config.AppSettings.Settings.Remove("Snap to Cursor");

@@ -39,17 +39,20 @@
             this.trackBar_smoothingStrength = new System.Windows.Forms.TrackBar();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.checkBox_smoothOnDraw = new System.Windows.Forms.CheckBox();
             this.checkBox_stayOnTop = new System.Windows.Forms.CheckBox();
             this.textBox_smoothingStrength = new System.Windows.Forms.TextBox();
             this.button_toggleDisplay = new System.Windows.Forms.Button();
             this.toolTip_smoothingOnOff = new System.Windows.Forms.ToolTip(this.components);
             this.button_smoothOnOff = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.MouseResetBtn = new System.Windows.Forms.Button();
+            this.MouseLeftBtn = new System.Windows.Forms.Button();
+            this.MouseRightBtn = new System.Windows.Forms.Button();
+            this.MouseDoubleBtn = new System.Windows.Forms.Button();
+            this.MouseDragBtn = new System.Windows.Forms.Button();
             this.toolTip_toggleOverScreen = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip_cursorColor = new System.Windows.Forms.ToolTip(this.components);
-            this.button_colorDialog = new System.Windows.Forms.Button();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_smoothingStrength)).BeginInit();
             this.panel1.SuspendLayout();
@@ -61,7 +64,7 @@
             this.testToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(334, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(447, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -79,21 +82,26 @@
             // ToolStripMenuItem_saveConfig
             // 
             this.ToolStripMenuItem_saveConfig.Name = "ToolStripMenuItem_saveConfig";
-            this.ToolStripMenuItem_saveConfig.Size = new System.Drawing.Size(180, 22);
+            this.ToolStripMenuItem_saveConfig.Size = new System.Drawing.Size(159, 22);
             this.ToolStripMenuItem_saveConfig.Text = "Save Config";
             this.ToolStripMenuItem_saveConfig.Click += new System.EventHandler(this.ToolStripMenuItem_saveConfig_Click);
             // 
             // ToolStripMenuItem_restoreDefaults
             // 
             this.ToolStripMenuItem_restoreDefaults.Name = "ToolStripMenuItem_restoreDefaults";
-            this.ToolStripMenuItem_restoreDefaults.Size = new System.Drawing.Size(180, 22);
+            this.ToolStripMenuItem_restoreDefaults.Size = new System.Drawing.Size(159, 22);
             this.ToolStripMenuItem_restoreDefaults.Text = "Restore Defaults";
             this.ToolStripMenuItem_restoreDefaults.Click += new System.EventHandler(this.ToolStripMenuItem_restoreDefaults_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(156, 6);
             // 
             // ToolStripMenuItem_exit
             // 
             this.ToolStripMenuItem_exit.Name = "ToolStripMenuItem_exit";
-            this.ToolStripMenuItem_exit.Size = new System.Drawing.Size(180, 22);
+            this.ToolStripMenuItem_exit.Size = new System.Drawing.Size(159, 22);
             this.ToolStripMenuItem_exit.Text = "Exit";
             this.ToolStripMenuItem_exit.Click += new System.EventHandler(this.ToolStripMenuItem_exit_Click);
             // 
@@ -121,7 +129,6 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panel1.Controls.Add(this.checkBox_smoothOnDraw);
             this.panel1.Controls.Add(this.checkBox_stayOnTop);
             this.panel1.Controls.Add(this.textBox_smoothingStrength);
             this.panel1.Controls.Add(this.label1);
@@ -130,16 +137,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(238, 60);
             this.panel1.TabIndex = 4;
-            // 
-            // checkBox_smoothOnDraw
-            // 
-            this.checkBox_smoothOnDraw.AutoSize = true;
-            this.checkBox_smoothOnDraw.Location = new System.Drawing.Point(126, 33);
-            this.checkBox_smoothOnDraw.Name = "checkBox_smoothOnDraw";
-            this.checkBox_smoothOnDraw.Size = new System.Drawing.Size(107, 17);
-            this.checkBox_smoothOnDraw.TabIndex = 9;
-            this.checkBox_smoothOnDraw.Text = "Smooth On Draw";
-            this.checkBox_smoothOnDraw.UseVisualStyleBackColor = true;
             // 
             // checkBox_stayOnTop
             // 
@@ -172,7 +169,7 @@
             this.button_toggleDisplay.TabIndex = 5;
             this.toolTip_toggleOverScreen.SetToolTip(this.button_toggleDisplay, "Toggle which screen displays the overlay");
             this.button_toggleDisplay.UseVisualStyleBackColor = false;
-            this.button_toggleDisplay.Click += new System.EventHandler(this.button_toggleScreen_Click);
+            this.button_toggleDisplay.Click += new System.EventHandler(this.button_displayOverlay);
             // 
             // button_smoothOnOff
             // 
@@ -187,18 +184,6 @@
             this.toolTip_smoothingOnOff.SetToolTip(this.button_smoothOnOff, "Turn smoothing on/off");
             this.button_smoothOnOff.UseVisualStyleBackColor = false;
             this.button_smoothOnOff.Click += new System.EventHandler(this.button_SmoothOnOff_Click);
-            // 
-            // button_colorDialog
-            // 
-            this.button_colorDialog.BackColor = System.Drawing.Color.Gainsboro;
-            this.button_colorDialog.BackgroundImage = global::Staby.Properties.Resources.eyedropper;
-            this.button_colorDialog.Location = new System.Drawing.Point(46, 97);
-            this.button_colorDialog.Name = "button_colorDialog";
-            this.button_colorDialog.Size = new System.Drawing.Size(26, 26);
-            this.button_colorDialog.TabIndex = 5;
-            this.toolTip_cursorColor.SetToolTip(this.button_colorDialog, "Change the virtual cursor\'s color");
-            this.button_colorDialog.UseVisualStyleBackColor = false;
-            this.button_colorDialog.Click += new System.EventHandler(this.button_colorDialog_Click);
             // 
             // button1
             // 
@@ -215,15 +200,94 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.Stabilization);
             // 
+            // MouseResetBtn
+            // 
+            this.MouseResetBtn.BackColor = System.Drawing.Color.Gainsboro;
+            this.MouseResetBtn.BackgroundImage = global::Staby.Properties.Resources.toggledisplay;
+            this.MouseResetBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.MouseResetBtn.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MouseResetBtn.Location = new System.Drawing.Point(12, 185);
+            this.MouseResetBtn.Name = "MouseResetBtn";
+            this.MouseResetBtn.Size = new System.Drawing.Size(80, 80);
+            this.MouseResetBtn.TabIndex = 7;
+            this.MouseResetBtn.TabStop = false;
+            this.toolTip_smoothingOnOff.SetToolTip(this.MouseResetBtn, "Aucune action");
+            this.MouseResetBtn.UseVisualStyleBackColor = false;
+            this.MouseResetBtn.MouseHover += new System.EventHandler(this.MouseReset);
+            // 
+            // MouseLeftBtn
+            // 
+            this.MouseLeftBtn.BackColor = System.Drawing.Color.Gainsboro;
+            this.MouseLeftBtn.BackgroundImage = global::Staby.Properties.Resources.toggledisplay;
+            this.MouseLeftBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.MouseLeftBtn.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MouseLeftBtn.Location = new System.Drawing.Point(98, 185);
+            this.MouseLeftBtn.Name = "MouseLeftBtn";
+            this.MouseLeftBtn.Size = new System.Drawing.Size(80, 80);
+            this.MouseLeftBtn.TabIndex = 8;
+            this.MouseLeftBtn.TabStop = false;
+            this.toolTip_smoothingOnOff.SetToolTip(this.MouseLeftBtn, "Clique gauche");
+            this.MouseLeftBtn.UseVisualStyleBackColor = false;
+            this.MouseLeftBtn.MouseHover += new System.EventHandler(this.MouseLeftClick);
+            // 
+            // MouseRightBtn
+            // 
+            this.MouseRightBtn.BackColor = System.Drawing.Color.Gainsboro;
+            this.MouseRightBtn.BackgroundImage = global::Staby.Properties.Resources.toggledisplay;
+            this.MouseRightBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.MouseRightBtn.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MouseRightBtn.Location = new System.Drawing.Point(184, 185);
+            this.MouseRightBtn.Name = "MouseRightBtn";
+            this.MouseRightBtn.Size = new System.Drawing.Size(80, 80);
+            this.MouseRightBtn.TabIndex = 9;
+            this.MouseRightBtn.TabStop = false;
+            this.toolTip_smoothingOnOff.SetToolTip(this.MouseRightBtn, "Clique droit");
+            this.MouseRightBtn.UseVisualStyleBackColor = false;
+            this.MouseRightBtn.MouseHover += new System.EventHandler(this.MouseRightClick);
+            // 
+            // MouseDoubleBtn
+            // 
+            this.MouseDoubleBtn.BackColor = System.Drawing.Color.Gainsboro;
+            this.MouseDoubleBtn.BackgroundImage = global::Staby.Properties.Resources.toggledisplay;
+            this.MouseDoubleBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.MouseDoubleBtn.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MouseDoubleBtn.Location = new System.Drawing.Point(270, 185);
+            this.MouseDoubleBtn.Name = "MouseDoubleBtn";
+            this.MouseDoubleBtn.Size = new System.Drawing.Size(80, 80);
+            this.MouseDoubleBtn.TabIndex = 10;
+            this.MouseDoubleBtn.TabStop = false;
+            this.toolTip_smoothingOnOff.SetToolTip(this.MouseDoubleBtn, "Double clique");
+            this.MouseDoubleBtn.UseVisualStyleBackColor = false;
+            this.MouseDoubleBtn.MouseHover += new System.EventHandler(this.MouseDoublClick);
+            // 
+            // MouseDragBtn
+            // 
+            this.MouseDragBtn.BackColor = System.Drawing.Color.Gainsboro;
+            this.MouseDragBtn.BackgroundImage = global::Staby.Properties.Resources.toggledisplay;
+            this.MouseDragBtn.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.MouseDragBtn.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MouseDragBtn.Location = new System.Drawing.Point(356, 185);
+            this.MouseDragBtn.Name = "MouseDragBtn";
+            this.MouseDragBtn.Size = new System.Drawing.Size(80, 80);
+            this.MouseDragBtn.TabIndex = 11;
+            this.MouseDragBtn.TabStop = false;
+            this.toolTip_smoothingOnOff.SetToolTip(this.MouseDragBtn, "Drag and drop");
+            this.MouseDragBtn.UseVisualStyleBackColor = false;
+            this.MouseDragBtn.MouseHover += new System.EventHandler(this.MouseDragClick);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(334, 162);
+            this.ClientSize = new System.Drawing.Size(447, 335);
+            this.Controls.Add(this.MouseDragBtn);
+            this.Controls.Add(this.MouseDoubleBtn);
+            this.Controls.Add(this.MouseRightBtn);
+            this.Controls.Add(this.MouseLeftBtn);
+            this.Controls.Add(this.MouseResetBtn);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.button_colorDialog);
             this.Controls.Add(this.button_toggleDisplay);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button_smoothOnOff);
@@ -255,7 +319,6 @@
         private System.Windows.Forms.ToolTip toolTip_toggleOverScreen;
         private System.Windows.Forms.ToolTip toolTip_cursorColor;
         private System.Windows.Forms.ColorDialog colorDialog;
-        public System.Windows.Forms.Button button_colorDialog;
         public System.Windows.Forms.Button button_smoothOnOff;
         public System.Windows.Forms.Button button_toggleDisplay;
         public System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_saveConfig;
@@ -263,8 +326,12 @@
         public System.Windows.Forms.TrackBar trackBar_smoothingStrength;
         public System.Windows.Forms.TextBox textBox_smoothingStrength;
         public System.Windows.Forms.CheckBox checkBox_stayOnTop;
-        public System.Windows.Forms.CheckBox checkBox_smoothOnDraw;
         public System.Windows.Forms.Button button1;
+        public System.Windows.Forms.Button MouseResetBtn;
+        public System.Windows.Forms.Button MouseLeftBtn;
+        public System.Windows.Forms.Button MouseRightBtn;
+        public System.Windows.Forms.Button MouseDoubleBtn;
+        public System.Windows.Forms.Button MouseDragBtn;
     }
 }
 

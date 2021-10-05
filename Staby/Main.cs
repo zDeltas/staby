@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Timers;
-using System.Configuration;
 
 namespace Staby
 {
@@ -15,8 +14,8 @@ namespace Staby
         public Overlay overlay = new Overlay();
         private List<Point> linePoints = new List<Point>();
         private List<Point> smoothPoints = new List<Point>();
-        private System.Timers.Timer lineSmoothingTimer = new System.Timers.Timer();
-        private System.Timers.Timer lineProcessingTimer = new System.Timers.Timer();
+        private readonly System.Timers.Timer lineSmoothingTimer = new System.Timers.Timer();
+        private readonly System.Timers.Timer lineProcessingTimer = new System.Timers.Timer();
         public int virtualWidth = GetSystemMetrics(78);
         public int virtualHeight = GetSystemMetrics(79);
         public int virtualLeft = GetSystemMetrics(76);
@@ -38,7 +37,6 @@ namespace Staby
             overlay.Show();
             overlay.TopMost = true;
             overlay.Bounds = Screen.AllScreens[0].Bounds;
-            button_colorDialog.BackColor = overlay.cursorColor;
 
             // Attempt to load the config file, if any
             config.LoadConfig();
@@ -318,26 +316,17 @@ namespace Staby
             }
         }
         
-        private void button_toggleScreen_Click(object sender, EventArgs e)
+        private void button_displayOverlay(object sender, EventArgs e)
         {
-            config.overlayScreen++;
-            if (config.overlayScreen > (Screen.AllScreens.Count() - 1))
+            if (!config.disableOverlay)
             {
-                config.overlayScreen = 0;
+                overlay.Hide();
+                config.disableOverlay = true;
             }
-            overlay.Bounds = Screen.AllScreens[config.overlayScreen].Bounds;
-            overlay.Invalidate();
-        }
-
-        private void button_colorDialog_Click(object sender, EventArgs e)
-        {
-            DialogResult result = colorDialog.ShowDialog();
-            if (result == DialogResult.OK)
+            else
             {
-                if (colorDialog.Color == Color.White) colorDialog.Color = Color.FromArgb(255,255,254);
-                button_colorDialog.BackColor = colorDialog.Color;
-                overlay.cursorColor = colorDialog.Color;
-                overlay.Invalidate();
+                overlay.Show();
+                config.disableOverlay = false;
             }
         }
 
@@ -362,6 +351,34 @@ namespace Staby
         {
             button1.Text = "TODO";
         }
+
+
+        // Mouse Action
+        private void MouseReset(object sender, EventArgs e)
+        {
+            config.mouseAction = 0;
+        }
+
+        private void MouseLeftClick(object sender, EventArgs e)
+        {
+            config.mouseAction = 1;
+        }
+
+        private void MouseRightClick(object sender, EventArgs e)
+        {
+            config.mouseAction = 2;
+        }
+
+        private void MouseDoublClick(object sender, EventArgs e)
+        {
+            config.mouseAction = 3;
+        }
+
+        private void MouseDragClick(object sender, EventArgs e)
+        {
+            config.mouseAction = 4;
+        }
+
 
         // Raw input hook
         private struct RawInputDevice
