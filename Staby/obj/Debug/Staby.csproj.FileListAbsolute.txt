@@ -1,0 +1,10 @@
+C:\Users\Damien\Desktop\Staby-1.0\Staby\bin\Debug\Staby.exe
+C:\Users\Damien\Desktop\Staby-1.0\Staby\bin\Debug\Staby.pdb
+C:\Users\Damien\Desktop\Staby-1.0\Staby\obj\Debug\Staby.csproj.AssemblyReference.cache
+C:\Users\Damien\Desktop\Staby-1.0\Staby\obj\Debug\Staby.Main.resources
+C:\Users\Damien\Desktop\Staby-1.0\Staby\obj\Debug\Staby.Overlay.resources
+C:\Users\Damien\Desktop\Staby-1.0\Staby\obj\Debug\Staby.Properties.Resources.resources
+C:\Users\Damien\Desktop\Staby-1.0\Staby\obj\Debug\Staby.csproj.GenerateResource.cache
+C:\Users\Damien\Desktop\Staby-1.0\Staby\obj\Debug\Staby.csproj.CoreCompileInputs.cache
+C:\Users\Damien\Desktop\Staby-1.0\Staby\obj\Debug\Staby.exe
+C:\Users\Damien\Desktop\Staby-1.0\Staby\obj\Debug\Staby.pdb
