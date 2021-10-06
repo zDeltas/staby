@@ -302,7 +302,6 @@ namespace Staby
                 isDrawing = true;
                 lineProcessingTimer.Start();
                 lineSmoothingTimer.Start();
-                
                 smoothingOn = true;
             }
         }
