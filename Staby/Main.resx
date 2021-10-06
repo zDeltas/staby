@@ -153,9 +153,6 @@
         qf8AJPrtdJQMV5wAAAAASUVORK5CYII=
 </value>
   </data>
-  <metadata name="toolTip_toggleOverScreen.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>309, 11</value>
-  </metadata>
   <metadata name="toolTip_cursorColor.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>502, 11</value>
   </metadata>
