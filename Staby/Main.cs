@@ -210,12 +210,20 @@ namespace Staby
             overlay.cursorPos = MouseHook.GetCursorPosition();
             overlay.Invalidate();
             testTimer.Enabled = true;
-
         }
 
         private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
-            Point lastUnMove = MouseHook.GetCursorPosition();
+            Point lastUnMove;
+            if (smoothingOn)
+            {
+                lastUnMove = lastPosition;
+            }
+            else
+            {
+                lastUnMove = MouseHook.GetCursorPosition();
+            }
+            
             Thread.Sleep(2000);
             if (lastUnMove == MouseHook.GetCursorPosition())
             {
@@ -405,7 +413,6 @@ namespace Staby
             t.Wait();
             var position = MouseHook.GetCursorPosition();
                 positions.Add(position);
-            Debug.WriteLine(MouseHook.GetCursorPosition());
             }
 
             foreach (Point item in positions)
@@ -443,6 +450,7 @@ namespace Staby
         private void MouseLeftClick(object sender, EventArgs e)
         {
             config.mouseAction = 1;
+
         }
 
         private void MouseRightClick(object sender, EventArgs e)
