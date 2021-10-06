@@ -31,6 +31,7 @@ namespace Staby
         private Point position = new Point(0, 0);
         private Point lastPosition = new Point(0, 0);
         private bool isDrag = false;
+        private int i = 0;
 
         public Main()
         {
@@ -205,19 +206,9 @@ namespace Staby
         private void MouseMoveHandler(object sender, EventArgs e)
         {
             testTimer.Enabled = false;
-            if (!smoothingOn)
-            {
-                overlay.cursorPos = MouseHook.GetCursorPosition();
-                overlay.Invalidate();
-                testTimer.Enabled = true;
-            }
-
-            if (!isDrawing && MouseHook.moveEnabled)
-            {
-                overlay.cursorPos = MouseHook.GetCursorPosition();
-                overlay.Invalidate();
-                testTimer.Enabled = true;
-            }
+            overlay.cursorPos = MouseHook.GetCursorPosition();
+            overlay.Invalidate();
+            testTimer.Enabled = true;
 
         }
 
