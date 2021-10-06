@@ -52,7 +52,7 @@ namespace Staby
                 disableAutoDetection = false;
 
                 // Main window resetting
-                mainForm.checkBox_stayOnTop.Checked = false;
+                //mainForm.checkBox_stayOnTop.Checked = false;
                 mainForm.textBox_smoothingStrength.Text = smoothingStrength.ToString();
                 mainForm.TopMost = false;
 
@@ -78,7 +78,7 @@ namespace Staby
                     mainForm.textBox_smoothingStrength.Text = smoothingStrength.ToString();
                     if (stayOnTop)
                     {
-                        mainForm.checkBox_stayOnTop.Checked = true;
+                        //mainForm.checkBox_stayOnTop.Checked = true;
                         mainForm.TopMost = true;
                         overlayForm.TopMost = true;
                     }
@@ -133,7 +133,7 @@ namespace Staby
             config.AppSettings.Settings.Remove("Snap to Cursor");
             config.AppSettings.Settings.Add("Snap to Cursor", snapToCursor.ToString());
             config.AppSettings.Settings.Remove("Cursor Graphic");
-            config.AppSettings.Settings.Add("Cursor Graphic", overlayForm.cursorType.ToString());
+            //config.AppSettings.Settings.Add("Cursor Graphic", overlayForm.cursorType.ToString());
             config.AppSettings.Settings.Remove("Main Color");
             config.AppSettings.Settings.Add("Main Color", ColorTranslator.ToHtml(overlayForm.cursorColor));
             config.AppSettings.Settings.Remove("Fill Color");

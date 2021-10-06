@@ -8,3 +8,12 @@ C:\Users\Damien\Desktop\Staby-1.0\Staby\obj\Debug\Staby.csproj.GenerateResource.
 C:\Users\Damien\Desktop\Staby-1.0\Staby\obj\Debug\Staby.csproj.CoreCompileInputs.cache
 C:\Users\Damien\Desktop\Staby-1.0\Staby\obj\Debug\Staby.exe
 C:\Users\Damien\Desktop\Staby-1.0\Staby\obj\Debug\Staby.pdb
+D:\Work\B3\Projets\C#\staby\Staby\bin\Debug\Staby.exe
+D:\Work\B3\Projets\C#\staby\Staby\bin\Debug\Staby.pdb
+D:\Work\B3\Projets\C#\staby\Staby\obj\Debug\Staby.Main.resources
+D:\Work\B3\Projets\C#\staby\Staby\obj\Debug\Staby.Overlay.resources
+D:\Work\B3\Projets\C#\staby\Staby\obj\Debug\Staby.Properties.Resources.resources
+D:\Work\B3\Projets\C#\staby\Staby\obj\Debug\Staby.csproj.GenerateResource.cache
+D:\Work\B3\Projets\C#\staby\Staby\obj\Debug\Staby.csproj.CoreCompileInputs.cache
+D:\Work\B3\Projets\C#\staby\Staby\obj\Debug\Staby.exe
+D:\Work\B3\Projets\C#\staby\Staby\obj\Debug\Staby.pdb

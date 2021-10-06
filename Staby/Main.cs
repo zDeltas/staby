@@ -21,6 +21,10 @@ namespace Staby
 
         private System.Timers.Timer testTimer = new System.Timers.Timer();
 
+        //
+        public bool sotOn = false;
+        //
+
         public int virtualWidth = GetSystemMetrics(78);
         public int virtualHeight = GetSystemMetrics(79);
         public int virtualLeft = GetSystemMetrics(76);
@@ -70,6 +74,19 @@ namespace Staby
             devices[0].Flags = 0x00000100;
             devices[0].Target = Handle;
             RegisterRawInputDevices(devices, 1, size);
+
+            //changer fond
+
+            this.BackColor = Color.Gainsboro;
+            //this.Opacity = .9;
+            //this.Style
+            //Rectangle screenRectangle = this.RectangleToScreen(this.ClientRectangle);
+            //int titleHeight = screenRectangle.Top - this.Top;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+            //Text = "";
+
         }
 
         // Reading global raw input
@@ -229,6 +246,7 @@ namespace Staby
             {
                 if(config.mouseAction >= 0 && config.mouseAction <= 3)
                 {
+
                     ClickEvent.Click(config.mouseAction, MouseHook.GetCursorPosition());
                 }
                 else if (config.mouseAction == 4 || isDrag)
@@ -293,7 +311,7 @@ namespace Staby
             else
             {
                 // On
-                button_smoothOnOff.BackColor = Color.Azure;
+                button_smoothOnOff.BackColor = Color.Lime;
                 linePoints.Clear();
                 smoothPoints.Clear();
                 position = MouseHook.GetCursorPosition();
@@ -342,8 +360,34 @@ namespace Staby
             config.smoothingInterpolation = (int)Math.Round(config.smoothingStrength * 0.15);
         }
 
+        //Stay on top
+        private void SotBtn_Click(object sender, EventArgs e)
+        {
+            if (!sotOn)
+                //on
+            {
+                SotBtn.BackColor = Color.Gainsboro;
 
-        private void checkBox_stayOnTop_CheckedChanged(object sender, EventArgs e)
+                TopMost = false;
+                overlay.TopMost = false;
+                config.stayOnTop = false;
+
+                sotOn = true;
+            }
+            //off
+            else
+            {
+                SotBtn.BackColor = Color.Lime;
+
+                TopMost = true;
+                overlay.TopMost = true;
+                config.stayOnTop = true;
+
+                sotOn = false;
+            }
+        }
+        /*
+            private void checkBox_stayOnTop_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox_stayOnTop.Checked)
             {
@@ -356,7 +400,7 @@ namespace Staby
                 TopMost = false;
                 config.stayOnTop = false;
             }
-        }
+        }*/
         
         private void button_displayOverlay(object sender, EventArgs e)
         {
@@ -391,33 +435,49 @@ namespace Staby
 
         private void Stabilization(object sender, EventArgs e)
         {
-            button1.Text = "TODO";
+            StabilizationBtn.Text = "TODO";
         }
 
-
+        //Couleur
+        private void ColorReset()
+        {
+            MouseLeftBtn.BackColor = Color.Gainsboro;
+            MouseRightBtn.BackColor = Color.Gainsboro;
+            MouseDoubleBtn.BackColor = Color.Gainsboro;
+            MouseDragBtn.BackColor = Color.Gainsboro;
+        }
         // Mouse Action
         private void MouseReset(object sender, EventArgs e)
         {
             config.mouseAction = 0;
+            ColorReset();
         }
 
         private void MouseLeftClick(object sender, EventArgs e)
         {
+            ColorReset();
+            MouseLeftBtn.BackColor = Color.Lime;
             config.mouseAction = 1;
         }
 
         private void MouseRightClick(object sender, EventArgs e)
         {
+            ColorReset();
+            MouseRightBtn.BackColor = Color.Lime;
             config.mouseAction = 2;
         }
 
         private void MouseDoublClick(object sender, EventArgs e)
         {
+            ColorReset();
+            MouseDoubleBtn.BackColor = Color.Lime;
             config.mouseAction = 3;
         }
 
         private void MouseDragClick(object sender, EventArgs e)
         {
+            ColorReset();
+            MouseDragBtn.BackColor = Color.Lime;
             config.mouseAction = 4;
         }
 
@@ -466,5 +526,24 @@ namespace Staby
         [DllImport("user32.dll")]
         private static extern int GetSystemMetrics(int nIndex);
 
+        private void Main_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void testToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void MouseDragBtn_Click(object sender, EventArgs e)
+        {
+
+        }
     } 
 }
