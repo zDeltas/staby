@@ -5,6 +5,8 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Timers;
+using System.Diagnostics;
+using System.Threading;
 
 namespace Staby
 {
@@ -16,6 +18,9 @@ namespace Staby
         private List<Point> smoothPoints = new List<Point>();
         private readonly System.Timers.Timer lineSmoothingTimer = new System.Timers.Timer();
         private readonly System.Timers.Timer lineProcessingTimer = new System.Timers.Timer();
+
+        private System.Timers.Timer testTimer = new System.Timers.Timer();
+
         public int virtualWidth = GetSystemMetrics(78);
         public int virtualHeight = GetSystemMetrics(79);
         public int virtualLeft = GetSystemMetrics(76);
@@ -25,6 +30,7 @@ namespace Staby
         public bool mouseMoving = false;
         private Point position = new Point(0, 0);
         private Point lastPosition = new Point(0, 0);
+        private bool isDrag = false;
 
         public Main()
         {
@@ -44,6 +50,9 @@ namespace Staby
             // Low level mouse hook (MouseHook.cs)
             MouseHook.Start();
             MouseHook.MouseMoveHooked += new EventHandler(MouseMoveHandler);
+
+            testTimer.Elapsed += OnTimedEvent;
+            testTimer.AutoReset = false;
 
             // Mouse smoothing updater
             lineSmoothingTimer.Elapsed += new ElapsedEventHandler(LineSmoothingUpdate);
@@ -195,19 +204,52 @@ namespace Staby
 
         private void MouseMoveHandler(object sender, EventArgs e)
         {
+            testTimer.Enabled = false;
             if (!smoothingOn)
             {
                 overlay.cursorPos = MouseHook.GetCursorPosition();
                 overlay.Invalidate();
+                testTimer.Enabled = true;
             }
 
             if (!isDrawing && MouseHook.moveEnabled)
             {
                 overlay.cursorPos = MouseHook.GetCursorPosition();
                 overlay.Invalidate();
+                testTimer.Enabled = true;
             }
+
         }
-        
+
+        private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            Point lastUnMove = MouseHook.GetCursorPosition();
+            Thread.Sleep(2000);
+            if (lastUnMove == MouseHook.GetCursorPosition())
+            {
+                if(config.mouseAction >= 0 && config.mouseAction <= 3)
+                {
+                    ClickEvent.Click(config.mouseAction, MouseHook.GetCursorPosition());
+                }
+                else if (config.mouseAction == 4 || isDrag)
+                {
+                    if (!isDrag)
+                    {
+                        ClickEvent.Click(config.mouseAction, MouseHook.GetCursorPosition());
+                        isDrag = true;
+                    }
+                    else
+                    {
+                        ClickEvent.Click(config.mouseAction + 1, MouseHook.GetCursorPosition());
+                        isDrag = false;
+                    }
+                    
+                }
+            }
+
+            testTimer.Stop();
+        }
+
         protected override void WndProc(ref Message m)
         {
             const int WM_INPUT = 0xFF;

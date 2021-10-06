@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -7,8 +8,6 @@ namespace Staby
 {
     public static class MouseHook
     {
-        public static event EventHandler MouseDownHooked = delegate { };
-        public static event EventHandler MouseUpHooked = delegate { };
         public static event EventHandler MouseMoveHooked = delegate { };
         private static LowLevelMouseProcess _process = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
@@ -16,6 +15,13 @@ namespace Staby
         private const int WH_MOUSE_LL = 14;
         public static bool moveEnabled = true;
         public static bool downEnabled = true;
+        private static Point lastCoord = new Point(0, 0);
+
+        public enum test
+        {
+            MOUSEEVENTF_LEFTDOWN = 0x02,
+            MOUSEEVENTF_LEFTUP = 0x04,
+        }
 
         public enum MouseMessages
         {
@@ -65,7 +71,20 @@ namespace Staby
         {
             UnhookWindowsHookEx(_hookID);
         }
-        
+
+        public static bool IsMoving()
+        {
+            POINT lpPoint;
+            GetCursorPos(out lpPoint);
+
+            if (lpPoint == lastCoord) {
+                lastCoord = lpPoint;
+                return true;
+            }
+            lastCoord = lpPoint;
+            return false;
+        }
+
         private static IntPtr SetHook(LowLevelMouseProcess proc)
         {
             using (Process curProcess = Process.GetCurrentProcess())
@@ -73,37 +92,15 @@ namespace Staby
             {
                 return SetWindowsHookEx(WH_MOUSE_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
             }
-        }
+        }        
         
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             var info = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
             var extraInfo = (uint)info.dwExtraInfo.ToInt32();
+
             if (nCode >= 0)
             {
-                // Mouse Down
-                if (MouseMessages.WM_LBUTTONDOWN == (MouseMessages)wParam)
-                {
-                    MSLLHOOKSTRUCT hookStruct = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
-                    MouseDownHooked(null, new EventArgs());
-                    if (downEnabled)
-                    {
-                        return CallNextHookEx(_hookID, nCode, wParam, lParam);
-                    }
-                    else
-                    {
-                        return new IntPtr(1);
-                    }
-                }
-
-                // Mouse Up
-                if (MouseMessages.WM_LBUTTONUP == (MouseMessages)wParam)
-                {
-                    MSLLHOOKSTRUCT hookStruct = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
-                    MouseUpHooked(null, new EventArgs());
-                    return CallNextHookEx(_hookID, nCode, wParam, lParam);
-                }
-
                 // Mouse Move
                 if (MouseMessages.WM_MOUSEMOVE == (MouseMessages)wParam)
                 {
@@ -117,7 +114,8 @@ namespace Staby
                     {
                         return new IntPtr(1);
                     }
-                }
+                }                
+
             }
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
