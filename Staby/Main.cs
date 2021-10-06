@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Timers;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Staby
 {
@@ -383,6 +384,53 @@ namespace Staby
         private void Stabilization(object sender, EventArgs e)
         {
             button1.Text = "TODO";
+            config.smoothingStrength = SetAutoSmoothingStrengh();
+            lineProcessingTimer.Interval = config.smoothingStrength;
+            textBox_smoothingStrength.Text = config.smoothingStrength.ToString();
+            config.smoothingInterpolation = (int)Math.Round(config.smoothingStrength * 0.15);
+        }
+
+        private static int SetAutoSmoothingStrengh()
+        {
+            List<Point> positions = new List<Point>();
+            List<int> positionsX = new List<int>();
+            List<int> positionsY = new List<int>();
+
+            for (int i =0; i<100; i++)
+            { 
+            var t = Task.Run(async delegate
+            {
+                await Task.Delay(20);
+            });
+            t.Wait();
+            var position = MouseHook.GetCursorPosition();
+                positions.Add(position);
+            Debug.WriteLine(MouseHook.GetCursorPosition());
+            }
+
+            foreach (Point item in positions)
+            {
+                positionsX.Add(item.X);
+                positionsY.Add(item.Y);
+            }
+
+            var positionXMax = positionsX.Max();
+            var positionXMin = positionsX.Min();
+            var positionYMax = positionsY.Max();
+            var positionYMin = positionsY.Min();
+            int dif = ((positionXMax-positionXMin) + (positionYMax-positionYMin))/2;
+            int sensi = dif * 2;
+
+            if (sensi>100)
+            {
+                return 100;
+            }
+            if (sensi == 0)
+            {
+                return 1;
+            }
+            return sensi;
+
         }
 
 
