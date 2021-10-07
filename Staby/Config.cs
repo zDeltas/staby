@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Staby
 {
@@ -15,12 +9,14 @@ namespace Staby
         private Overlay overlayForm;
         public int smoothingPower = 30;
         public int smoothingInterpolation = 4;
+        public int clickDelay = 2000;
         public bool sotOn = true;
         public bool disableOverlay = false;
         public bool allScreens = false;
         public bool disableCatchUp = false;
         public bool snapToCursor = false;
         public int mouseAction = 0;
+        
 
         public Config(Main m, Overlay o)
         {
@@ -35,6 +31,7 @@ namespace Staby
             {
                 smoothingPower = 30;
                 smoothingInterpolation = 4;
+                clickDelay = 2000;
                 sotOn = true;
                 disableOverlay = false;
                 allScreens = false;
@@ -49,9 +46,12 @@ namespace Staby
                     Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                     // Main window loading
                     smoothingPower = int.Parse(config.AppSettings.Settings["Power"].Value);
+                    clickDelay = int.Parse(config.AppSettings.Settings["clickDelay"].Value);
                     smoothingInterpolation = int.Parse(config.AppSettings.Settings["Interpolation"].Value);
                     sotOn = bool.Parse(config.AppSettings.Settings["Stay On Top"].Value);
                     mainForm.textBox_smoothingPower.Text = smoothingPower.ToString();
+                    mainForm.textBox_clickDelay.Text = clickDelay.ToString();
+
                     if (true)
                     {
                         mainForm.sotOn = true;
@@ -60,7 +60,7 @@ namespace Staby
 
                     // ...and everything else
                     disableCatchUp = bool.Parse(config.AppSettings.Settings["Disable Catch Up"].Value);
-                    
+
                 }
                 catch
                 {
@@ -74,6 +74,8 @@ namespace Staby
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             config.AppSettings.Settings.Remove("Power");
             config.AppSettings.Settings.Add("Power", smoothingPower.ToString());
+            config.AppSettings.Settings.Remove("ClickDelay");
+            config.AppSettings.Settings.Add("ClickDelay", clickDelay.ToString());
             config.AppSettings.Settings.Remove("Interpolation");
             config.AppSettings.Settings.Add("Interpolation", smoothingInterpolation.ToString());
             config.AppSettings.Settings.Remove("Stay On Top");

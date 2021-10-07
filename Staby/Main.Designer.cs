@@ -51,6 +51,8 @@
             this.button_toggleDisplay = new System.Windows.Forms.Button();
             this.toolTip_cursorColor = new System.Windows.Forms.ToolTip(this.components);
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.textBox_clickDelay = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.menu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_smoothingPower)).BeginInit();
             this.SuspendLayout();
@@ -78,19 +80,19 @@
             // ToolStripMenuItem_saveConfig
             // 
             this.ToolStripMenuItem_saveConfig.Name = "ToolStripMenuItem_saveConfig";
-            this.ToolStripMenuItem_saveConfig.Size = new System.Drawing.Size(180, 22);
+            this.ToolStripMenuItem_saveConfig.Size = new System.Drawing.Size(137, 22);
             this.ToolStripMenuItem_saveConfig.Text = "Save Config";
             this.ToolStripMenuItem_saveConfig.Click += new System.EventHandler(this.ToolStripMenuItem_saveConfig_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(134, 6);
             // 
             // ToolStripMenuItem_exit
             // 
             this.ToolStripMenuItem_exit.Name = "ToolStripMenuItem_exit";
-            this.ToolStripMenuItem_exit.Size = new System.Drawing.Size(180, 22);
+            this.ToolStripMenuItem_exit.Size = new System.Drawing.Size(137, 22);
             this.ToolStripMenuItem_exit.Text = "Exit";
             this.ToolStripMenuItem_exit.Click += new System.EventHandler(this.ToolStripMenuItem_exit_Click);
             // 
@@ -262,13 +264,35 @@
             this.button_toggleDisplay.UseVisualStyleBackColor = false;
             this.button_toggleDisplay.Click += new System.EventHandler(this.DisplayOverlayBtn);
             // 
+            // textBox_clickDelay
+            // 
+            this.textBox_clickDelay.Location = new System.Drawing.Point(72, 728);
+            this.textBox_clickDelay.MaxLength = 5;
+            this.textBox_clickDelay.Name = "textBox_clickDelay";
+            this.textBox_clickDelay.Size = new System.Drawing.Size(52, 20);
+            this.textBox_clickDelay.TabIndex = 13;
+            this.textBox_clickDelay.Text = "2000";
+            this.textBox_clickDelay.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox_clickDelay.TextChanged += new System.EventHandler(this.ClickDelayInput);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 731);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(60, 13);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "Click Delay";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.CausesValidation = false;
-            this.ClientSize = new System.Drawing.Size(133, 750);
+            this.ClientSize = new System.Drawing.Size(133, 754);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.textBox_clickDelay);
             this.Controls.Add(this.textBox_smoothingPower);
             this.Controls.Add(this.SotBtn);
             this.Controls.Add(this.MouseDragBtn);
@@ -317,6 +341,8 @@
         public System.Windows.Forms.Button MouseDragBtn;
         private System.Windows.Forms.Button SotBtn;
         public System.Windows.Forms.TrackBar trackBar_smoothingPower;
+        public System.Windows.Forms.TextBox textBox_clickDelay;
+        private System.Windows.Forms.Label label1;
     }
 }
 

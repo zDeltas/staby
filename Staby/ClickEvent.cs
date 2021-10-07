@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace Staby
 {
@@ -18,31 +12,26 @@ namespace Staby
 
         public static void Click(int x, Point lastUnMove)
         {
-            
+
             if (x == 1)
             {
-                Debug.WriteLine("Left click");
                 mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, lastUnMove.X, lastUnMove.Y, 0, 0);
             }
             else if (x == 2)
             {
-                Debug.WriteLine("right click");
                 mouse_event(MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP, lastUnMove.X, lastUnMove.Y, 0, 0);
             }
             else if (x == 3)
             {
-                Debug.WriteLine("double click");
                 mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, lastUnMove.X, lastUnMove.Y, 0, 0);
                 mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, lastUnMove.X, lastUnMove.Y, 0, 0);
             }
             else if (x == 4)
             {
-                Debug.WriteLine("Drag click");
                 mouse_event(MOUSEEVENTF_LEFTDOWN, lastUnMove.X, lastUnMove.Y, 0, 0);
             }
             else if (x == 5)
             {
-                Debug.WriteLine("Drop click");
                 mouse_event(MOUSEEVENTF_LEFTUP, lastUnMove.X, lastUnMove.Y, 0, 0);
 
             }

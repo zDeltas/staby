@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -66,8 +65,8 @@ namespace Staby
             {
                 return SetWindowsHookEx(WH_MOUSE_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
             }
-        }        
-        
+        }
+
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             var info = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
@@ -88,12 +87,12 @@ namespace Staby
                     {
                         return new IntPtr(1);
                     }
-                }                
+                }
 
             }
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
-        
+
         // Dll imposting
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelMouseProcess lpfn, IntPtr hMod, uint dwThreadId);

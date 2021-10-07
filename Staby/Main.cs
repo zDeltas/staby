@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Windows.Forms;
-using System.Timers;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
+using System.Windows.Forms;
 
 namespace Staby
 {
@@ -43,7 +43,7 @@ namespace Staby
 
             // Attempt to load the config file, if any
             config.LoadConfig();
-            
+
             // Low level mouse hook (MouseHook.cs)
             MouseHook.Start();
             MouseHook.MouseMoveHooked += new EventHandler(MouseMoveHandler);
@@ -212,11 +212,11 @@ namespace Staby
             {
                 lastUnMove = MouseHook.GetCursorPosition();
             }
-            
-            Thread.Sleep(2000);
+
+            Thread.Sleep(config.clickDelay);
             if (lastUnMove == MouseHook.GetCursorPosition())
             {
-                if(config.mouseAction >= 0 && config.mouseAction <= 3)
+                if (config.mouseAction >= 0 && config.mouseAction <= 3)
                 {
                     ClickEvent.Click(config.mouseAction, MouseHook.GetCursorPosition());
                 }
@@ -232,7 +232,7 @@ namespace Staby
                         ClickEvent.Click(config.mouseAction + 1, MouseHook.GetCursorPosition());
                         isDrag = false;
                     }
-                    
+
                 }
             }
 
@@ -329,11 +329,35 @@ namespace Staby
             config.smoothingInterpolation = (int)Math.Round(config.smoothingPower * 0.15);
         }
 
+        private void ClickDelayInput(object sender, EventArgs e)
+        {
+            try
+            {
+                if (int.Parse(textBox_clickDelay.Text) < 1)
+                {
+                    config.clickDelay = 1;
+                }
+                else if (int.Parse(textBox_clickDelay.Text) > 10000)
+                {
+                    config.clickDelay = 10000;
+                }
+                else
+                {
+                    config.clickDelay = int.Parse(textBox_clickDelay.Text);
+                }
+            }
+            catch
+            {
+                config.clickDelay = 2000;
+            }
+            textBox_clickDelay.Text = config.clickDelay.ToString();
+        }
+
         //Stay on top
         private void SotClickBtn(object sender, EventArgs e)
         {
             if (!sotOn)
-                //on
+            //on
             {
                 SotBtn.BackColor = Color.Gainsboro;
 
@@ -355,7 +379,7 @@ namespace Staby
 
             }
         }
-        
+
         private void DisplayOverlayBtn(object sender, EventArgs e)
         {
             if (!config.disableOverlay)
@@ -397,14 +421,14 @@ namespace Staby
             List<int> positionsX = new List<int>();
             List<int> positionsY = new List<int>();
 
-            for (int i =0; i<100; i++)
-            { 
-            var t = Task.Run(async delegate
+            for (int i = 0; i < 100; i++)
             {
-                await Task.Delay(20);
-            });
-            t.Wait();
-            var position = MouseHook.GetCursorPosition();
+                var t = Task.Run(async delegate
+                {
+                    await Task.Delay(20);
+                });
+                t.Wait();
+                var position = MouseHook.GetCursorPosition();
                 positions.Add(position);
             }
 
@@ -418,10 +442,10 @@ namespace Staby
             var positionXMin = positionsX.Min();
             var positionYMax = positionsY.Max();
             var positionYMin = positionsY.Min();
-            int dif = ((positionXMax-positionXMin) + (positionYMax-positionYMin))/2;
+            int dif = ((positionXMax - positionXMin) + (positionYMax - positionYMin)) / 2;
             int sensi = dif * 2;
 
-            if (sensi>100)
+            if (sensi > 100)
             {
                 return 100;
             }
@@ -521,7 +545,7 @@ namespace Staby
             public int LastX;
             public int LastY;
             public int Extra;
-        }  
+        }
 
         //Dll importing
         [DllImport("user32.dll")]
@@ -533,5 +557,5 @@ namespace Staby
         [DllImport("user32.dll")]
         private static extern int GetSystemMetrics(int nIndex);
 
-    } 
+    }
 }

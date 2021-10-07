@@ -10,7 +10,7 @@ namespace Staby
             InitializeComponent();
             try
             {
-                string html = File.ReadAllText("aide-staby.html");
+                string html = File.ReadAllText("help-staby.html");
                 webBrowser.DocumentText = html;
             }
             catch

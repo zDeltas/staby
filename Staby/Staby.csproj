@@ -140,7 +140,7 @@
     <None Include="Resources\onoff.png" />
     <None Include="Resources\eyedropper.png" />
     <None Include="Resources\toggledisplay.png" />
-    <Content Include="aide-staby.html">
+    <Content Include="help-staby.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

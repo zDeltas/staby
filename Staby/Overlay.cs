@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace Staby
@@ -7,7 +6,7 @@ namespace Staby
     public partial class Overlay : Form
     {
         public Point cursorPos = new Point(0, 0);
-        public Color cursorColor = Color.FromArgb(128,128,128);
+        public Color cursorColor = Color.FromArgb(128, 128, 128);
         public Color cursorFillColor = Color.FromArgb(255, 255, 254);
         public CursorType cursorType = CursorType.Bullseye;
 
@@ -20,17 +19,17 @@ namespace Staby
 
         public enum CursorType
         {
-           Bullseye,
-           Circle,
-           Crosshair,
-           Cursor,
-           TinyCursor,
-           Pen
+            Bullseye,
+            Circle,
+            Crosshair,
+            Cursor,
+            TinyCursor,
+            Pen
         }
 
         public void OverlayPaint(object sender, PaintEventArgs e)
         {
-            
+
             Graphics graphics = e.Graphics;
             Pen pen = new Pen(cursorColor);
             SolidBrush penBrush = new SolidBrush(cursorColor);
