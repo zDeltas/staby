@@ -1,4 +1,5 @@
 C:\Users\Damien\Desktop\Staby-1.0\Staby\bin\Debug\help-staby.html
+C:\Users\Damien\Desktop\Staby-1.0\Staby\bin\Debug\help-staby.png
 C:\Users\Damien\Desktop\Staby-1.0\Staby\bin\Debug\Staby.exe
 C:\Users\Damien\Desktop\Staby-1.0\Staby\bin\Debug\Staby.pdb
 C:\Users\Damien\Desktop\Staby-1.0\Staby\obj\Debug\Staby.Main.resources
