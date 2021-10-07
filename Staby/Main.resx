@@ -117,48 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="menu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>7, 11</value>
-  </metadata>
-  <metadata name="toolTip_toggleOverScreen.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>309, 11</value>
   </metadata>
   <metadata name="toolTip_smoothingOnOff.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>122, 11</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="button_smoothOnOff.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
-        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAAsSAAALEgHS3X78AAAEeUlE
-        QVRoQ+2aSciVVRjHP5osbCQsCrUIKkslK2yjUQSCDaabggqLoEBoYeUig7KNwde8sUUEokFRNEDRABVF
-        m3LTIhsUSiqkooFo3BRlv0f+hx4ezn3veYd7v4/L+4Pfwvv+n+ecw/U773Snenp6enp6/md6enoBbsY7
-        cZ4+nkxY4Fx8Gw/IF3RoMmGBr7nFJnfo8GTBwk4LC03+jkcrNjmwqAvcIqOnKzY5sKjzwyK9CxWbvTDJ
-        Q3FZ6WSVzS3WXKBYJeQuwrV4nD4aDwy4GL/FNOGhGw+Zqm946ILJvBVqVunQaGGghfibGzi5VZEsHG+8
-        YI4/HPLJSxQZDQwwB/e5Ab17FcvC8cb/pTm+J+S9SxTrHprnzqPJ3Ypl4Xibb/iDkPd+hUco2h003eQG
-        yXm7olk43uYbviHkozsV7QYaLgoDRKcVHQiRtpvWhlATXadoe2j2YmjufV6xSsi1WrBB7rFQ5/1MsXbQ
-        yE5BuQHM73GuopWQa30eNshWbWDXKtYcmjwSmnpvVGwoZFt/wwbZK0Kt903FmkOTb0LT5EeKFEG+kwUb
-        5N8L9d4zFKsPxStCM++tihVBvssFrwn13tsUqw/Fd4VmyT/xeMWKIN/J33CCmi9Cj+RzeKxi5VB0topz
-        Td9QrBhqqr7h2ndL1DwaeiQ/x5WKlUPROtytJtG7FSuGmqpveL5ixVAzaPP6B29RrByK7sBf1CR6lWLF
-        UHNO6JH8F09WrBhq5rse0XsUK4ciI9fMrH3BTs25oUey0YIN6vwtqvchRcqhaHto4j1FsWKoWRJ6eE9V
-        rBbUfRr6JJ9UpByKBi3YdujauyA18/Av9fD+gIcpVgvqPnR9vNsVKYeiQbug2ejkTt220MfcosO1ofbr
-        0Cu5TZFyKLK3A3+4Jt4VitWG2vvRNsOfcLM+rg21J+LfmJtf5dOXLBRdg3tdE+8GxWYM5lB1FbhRsXIo
-        sguFV10T7zOKzRjMYUuYU9L2hDWKlUPRkbhVTaI/YvePVWrA+LvcfLyvY+2zyEEovNI1it6k2Nhh7OVh
-        Lt5NitWH4mPQ3v3kGu9SbOww9s4wF+9ixZpBg2dDQ+/1io0Nxlwa5uB9R7Hm0GRVaOr9Do9SdCwwXnwD
-        4b1OsXbQaNAGYT6l2MhhrKpHxXsUaw/NLgvNo/XvTmrCGJeHMaNXK9oNNHw8DBAd2aLpXfVIx3xa0W6h
-        8aArr+QTinYGPe8NY0TtErX+I50SaHwm5u54vPauZ7lKGkMPe8T0sXpWOfI3iBeGAQdpL94WqawYak7C
-        qvOsdzynRQZaHQau0h6qPYj2DMreLR+uNgfh3/ZTpvPQfrf1PuZ65FyvFuOBAS8NEyj1V/xS7sdhfyI5
-        12oa44WBz0K7O8lNahT+jEs1/MzBJKouP7vyZZyjIWceJmO/sKl6s9dUOxWOdiduA5Nbia9osm18F1er
-        7eyHyZ6AN+MO/ASHbU62ib2EG7HZDfxsgMkfgva4aD3ag8EH0N7k23tn8z60nzNcjEUv13t6enp6JpOp
-        qf8AJPrtdJQMV5wAAAAASUVORK5CYII=
-</value>
-  </data>
+  <metadata name="toolTip_toggleOverScreen.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>309, 11</value>
+  </metadata>
   <metadata name="toolTip_cursorColor.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>502, 11</value>
   </metadata>
   <metadata name="colorDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>650, 9</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAUAEBAAAAEAIABoBAAAVgAAABgYAAABACAAiAkAAL4EAAAgIAAAAQAgAKgQAABGDgAAMDAAAAEA

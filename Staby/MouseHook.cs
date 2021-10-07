@@ -14,23 +14,10 @@ namespace Staby
         private delegate IntPtr LowLevelMouseProcess(int nCode, IntPtr wParam, IntPtr lParam);
         private const int WH_MOUSE_LL = 14;
         public static bool moveEnabled = true;
-        public static bool downEnabled = true;
-        private static Point lastCoord = new Point(0, 0);
-
-        public enum test
-        {
-            MOUSEEVENTF_LEFTDOWN = 0x02,
-            MOUSEEVENTF_LEFTUP = 0x04,
-        }
 
         public enum MouseMessages
         {
-            WM_MOUSEMOVE = 0x0200,
-            WM_LBUTTONDOWN = 0x0201,
-            WM_LBUTTONUP = 0x0202,
-            WM_RBUTTONDOWN = 0x0204,
-            WM_RBUTTONUP = 0x0205,
-            WM_MOUSEWHEEL = 0x020A
+            WM_MOUSEMOVE = 0x0200
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -70,19 +57,6 @@ namespace Staby
         public static void Stop()
         {
             UnhookWindowsHookEx(_hookID);
-        }
-
-        public static bool IsMoving()
-        {
-            POINT lpPoint;
-            GetCursorPos(out lpPoint);
-
-            if (lpPoint == lastCoord) {
-                lastCoord = lpPoint;
-                return true;
-            }
-            lastCoord = lpPoint;
-            return false;
         }
 
         private static IntPtr SetHook(LowLevelMouseProcess proc)

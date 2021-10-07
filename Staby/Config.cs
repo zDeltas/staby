@@ -13,7 +13,7 @@ namespace Staby
     {
         private Main mainForm;
         private Overlay overlayForm;
-        public int smoothingStrength = 30;
+        public int smoothingPower = 30;
         public int smoothingInterpolation = 4;
         public int overlayScreen = 0;
         public int tolerance = 300;
@@ -38,7 +38,7 @@ namespace Staby
         {
             if (def)
             {
-                smoothingStrength = 30;
+                smoothingPower = 30;
                 smoothingInterpolation = 4;
                 overlayScreen = 0;
                 tolerance = 300;
@@ -50,11 +50,6 @@ namespace Staby
                 disableCatchUp = false;
                 snapToCursor = false;
                 disableAutoDetection = false;
-
-                // Main window resetting
-                mainForm.checkBox_stayOnTop.Checked = false;
-                mainForm.textBox_smoothingStrength.Text = smoothingStrength.ToString();
-                mainForm.TopMost = false;
 
                 // Cursor and overlay resetting
                 overlayForm.cursorColor = Color.FromArgb(128, 128, 128);
@@ -70,15 +65,14 @@ namespace Staby
                 {
                     Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                     // Main window loading
-                    smoothingStrength = int.Parse(config.AppSettings.Settings["Strength"].Value);
+                    smoothingPower = int.Parse(config.AppSettings.Settings["Power"].Value);
                     smoothingInterpolation = int.Parse(config.AppSettings.Settings["Interpolation"].Value);
                     manualInterpolation = bool.Parse(config.AppSettings.Settings["Manual Interpolation"].Value);
                     stayOnTop = bool.Parse(config.AppSettings.Settings["Stay On Top"].Value);
                     disableAutoDetection = bool.Parse(config.AppSettings.Settings["Disable Auto Detection"].Value);
-                    mainForm.textBox_smoothingStrength.Text = smoothingStrength.ToString();
+                    mainForm.textBox_smoothingPower.Text = smoothingPower.ToString();
                     if (stayOnTop)
                     {
-                        mainForm.checkBox_stayOnTop.Checked = true;
                         mainForm.TopMost = true;
                         overlayForm.TopMost = true;
                     }
@@ -111,8 +105,8 @@ namespace Staby
         public void SaveConfig()
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            config.AppSettings.Settings.Remove("Strength");
-            config.AppSettings.Settings.Add("Strength", smoothingStrength.ToString());
+            config.AppSettings.Settings.Remove("Power");
+            config.AppSettings.Settings.Add("Power", smoothingPower.ToString());
             config.AppSettings.Settings.Remove("Interpolation");
             config.AppSettings.Settings.Add("Interpolation", smoothingInterpolation.ToString());
             config.AppSettings.Settings.Remove("Manual Interpolation");

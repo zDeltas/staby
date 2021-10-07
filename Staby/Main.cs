@@ -21,7 +21,7 @@ namespace Staby
         private readonly System.Timers.Timer lineProcessingTimer = new System.Timers.Timer();
 
         private System.Timers.Timer testTimer = new System.Timers.Timer();
-
+        public bool sotOn = false;
         public int virtualWidth = GetSystemMetrics(78);
         public int virtualHeight = GetSystemMetrics(79);
         public int virtualLeft = GetSystemMetrics(76);
@@ -62,7 +62,7 @@ namespace Staby
 
             // Line processing updater
             lineProcessingTimer.Elapsed += new ElapsedEventHandler(LineProcessingUpdate);
-            lineProcessingTimer.Interval = config.smoothingStrength;
+            lineProcessingTimer.Interval = config.smoothingPower;
 
             // Register a raw input listener
             int size = Marshal.SizeOf(typeof(RawInputDevice));
@@ -72,6 +72,12 @@ namespace Staby
             devices[0].Flags = 0x00000100;
             devices[0].Target = Handle;
             RegisterRawInputDevices(devices, 1, size);
+
+            this.BackColor = Color.Gainsboro;
+
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.Sizable;
         }
 
         // Reading global raw input
@@ -98,12 +104,10 @@ namespace Staby
         {
             try
             {
-                // B-Spline smoothing
                 if (linePoints.Count > 3)
                 {
-                    int i;
-                    int splineX;
-                    int splineY;
+                    int sX;
+                    int sY;
                     double[] a = new double[5];
                     double[] b = new double[5];
                     Point p1 = linePoints[0];
@@ -125,28 +129,19 @@ namespace Staby
                     for (i = 1; i <= config.smoothingInterpolation - 1; i++)
                     {
                         float t = Convert.ToSingle(i) / Convert.ToSingle(config.smoothingInterpolation);
-                        splineX = (int)((a[2] + t * (a[1] + t * a[0])) * t + a[3]);
-                        splineY = (int)((b[2] + t * (b[1] + t * b[0])) * t + b[3]);
-                        if (smoothPoints.Last<Point>() != new Point(splineX, splineY))
+
+                        sX = (int)((a[2] + t * (a[1] + t * a[0])) * t + a[3]);
+                        sY = (int)((b[2] + t * (b[1] + t * b[0])) * t + b[3]);
+                        if (smoothPoints.Last<Point>() != new Point(sX, sY))
                         {
-                            smoothPoints.Add(new Point(splineX, splineY));
+                            smoothPoints.Add(new Point(sX, sY));
                         }
                     }
                     linePoints.RemoveAt(0);
                 }
                 else if (MouseHook.GetCursorPosition() != position && isDrawing)
                 {
-                    if (config.disableCatchUp)
-                    {
-                        if (mouseMoving)
-                        {
-                            linePoints.Add(position);
-                        }
-                    }
-                    else
-                    {
-                        linePoints.Add(position);
-                    }
+                    linePoints.Add(position);
                 }
             }
             catch
@@ -200,7 +195,6 @@ namespace Staby
                 lineSmoothingTimer.Stop();
                 if (!config.snapToCursor) MouseHook.SetCursorPos(guidePos.X, guidePos.Y);
                 MouseHook.moveEnabled = true;
-                MouseHook.downEnabled = true;
             }
         }
 
@@ -277,14 +271,13 @@ namespace Staby
         }
 
         // Interface handling
-        private void button_SmoothOnOff_Click(object sender, EventArgs e)
+        private void SmoothOnOffClickBtn(object sender, EventArgs e)
         {
             if (smoothingOn)
             {
                 // Off
                 button_smoothOnOff.BackColor = Color.Gainsboro;
                 MouseHook.moveEnabled = true;
-                MouseHook.downEnabled = true;
                 smoothingOn = false;
                 isDrawing = false;
                 lineSmoothingTimer.Stop();
@@ -293,7 +286,7 @@ namespace Staby
             else
             {
                 // On
-                button_smoothOnOff.BackColor = Color.Azure;
+                button_smoothOnOff.BackColor = Color.Lime;
                 linePoints.Clear();
                 smoothPoints.Clear();
                 position = MouseHook.GetCursorPosition();
@@ -306,58 +299,69 @@ namespace Staby
             }
         }
 
-        private void trackBar_smoothStrength_Scroll(object sender, EventArgs e)
+        private void TrackBarSmoothPower(object sender, EventArgs e)
         {
-            config.smoothingStrength = trackBar_smoothingStrength.Value;
-            lineProcessingTimer.Interval = config.smoothingStrength;
-            textBox_smoothingStrength.Text = config.smoothingStrength.ToString();
-            config.smoothingInterpolation = (int)Math.Round(config.smoothingStrength * 0.15);
+            config.smoothingPower = trackBar_smoothingPower.Value;
+            lineProcessingTimer.Interval = config.smoothingPower;
+            textBox_smoothingPower.Text = config.smoothingPower.ToString();
+            config.smoothingInterpolation = (int)Math.Round(config.smoothingPower * 0.15);
         }
 
-        private void textBox_smoothingStrength_TextChanged(object sender, EventArgs e)
+        private void TextBoxSmoothingPower(object sender, EventArgs e)
         {
             try
             {
-                if (int.Parse(textBox_smoothingStrength.Text) < 1)
+                if (int.Parse(textBox_smoothingPower.Text) < 1)
                 {
-                    config.smoothingStrength = 1;
+                    config.smoothingPower = 1;
                 }
-                else if (int.Parse(textBox_smoothingStrength.Text) > 100)
+                else if (int.Parse(textBox_smoothingPower.Text) > 100)
                 {
-                    config.smoothingStrength = 100;
+                    config.smoothingPower = 100;
                 }
                 else
                 {
-                    config.smoothingStrength = int.Parse(textBox_smoothingStrength.Text);
+                    config.smoothingPower = int.Parse(textBox_smoothingPower.Text);
                 }
             }
             catch
             {
-                config.smoothingStrength = 1;
+                config.smoothingPower = 1;
             }
-            lineProcessingTimer.Interval = config.smoothingStrength;
-            trackBar_smoothingStrength.Value = config.smoothingStrength;
-            textBox_smoothingStrength.Text = config.smoothingStrength.ToString();
-            config.smoothingInterpolation = (int)Math.Round(config.smoothingStrength * 0.15);
+            lineProcessingTimer.Interval = config.smoothingPower;
+            trackBar_smoothingPower.Value = config.smoothingPower;
+            textBox_smoothingPower.Text = config.smoothingPower.ToString();
+            config.smoothingInterpolation = (int)Math.Round(config.smoothingPower * 0.15);
         }
 
-
-        private void checkBox_stayOnTop_CheckedChanged(object sender, EventArgs e)
+        //Stay on top
+        private void SotClickBtn(object sender, EventArgs e)
         {
-            if (checkBox_stayOnTop.Checked)
+            if (!sotOn)
+                //on
             {
+                SotBtn.BackColor = Color.Gainsboro;
+
+                TopMost = false;
+                overlay.TopMost = false;
+                config.stayOnTop = false;
+
+                sotOn = true;
+            }
+            //off
+            else
+            {
+                SotBtn.BackColor = Color.Lime;
+
                 TopMost = true;
                 overlay.TopMost = true;
                 config.stayOnTop = true;
-            }
-            else
-            {
-                TopMost = false;
-                config.stayOnTop = false;
+
+                sotOn = false;
             }
         }
         
-        private void button_displayOverlay(object sender, EventArgs e)
+        private void DisplayOverlayBtn(object sender, EventArgs e)
         {
             if (!config.disableOverlay)
             {
@@ -390,14 +394,15 @@ namespace Staby
 
         private void Stabilization(object sender, EventArgs e)
         {
-            button1.Text = "TODO";
-            config.smoothingStrength = SetAutoSmoothingStrengh();
-            lineProcessingTimer.Interval = config.smoothingStrength;
-            textBox_smoothingStrength.Text = config.smoothingStrength.ToString();
-            config.smoothingInterpolation = (int)Math.Round(config.smoothingStrength * 0.15);
+            StabilizationBtn.Text = "GO";
+            config.smoothingPower = SetAutoSmoothingPower();
+            lineProcessingTimer.Interval = config.smoothingPower;
+            textBox_smoothingPower.Text = config.smoothingPower.ToString();
+            config.smoothingInterpolation = (int)Math.Round(config.smoothingPower * 0.15);
+            StabilizationBtn.Text = "";
         }
 
-        private static int SetAutoSmoothingStrengh()
+        private static int SetAutoSmoothingPower()
         {
             List<Point> positions = new List<Point>();
             List<int> positionsX = new List<int>();
@@ -439,31 +444,46 @@ namespace Staby
 
         }
 
+        private void ColorReset()
+        {
+            MouseLeftBtn.BackColor = Color.Gainsboro;
+            MouseRightBtn.BackColor = Color.Gainsboro;
+            MouseDoubleBtn.BackColor = Color.Gainsboro;
+            MouseDragBtn.BackColor = Color.Gainsboro;
+        }
 
         // Mouse Action
         private void MouseReset(object sender, EventArgs e)
         {
+            ColorReset();
             config.mouseAction = 0;
         }
 
         private void MouseLeftClick(object sender, EventArgs e)
         {
+            ColorReset();
+            MouseLeftBtn.BackColor = Color.Lime;
             config.mouseAction = 1;
-
         }
 
         private void MouseRightClick(object sender, EventArgs e)
         {
+            ColorReset();
+            MouseRightBtn.BackColor = Color.Lime;
             config.mouseAction = 2;
         }
 
         private void MouseDoublClick(object sender, EventArgs e)
         {
+            ColorReset();
+            MouseDoubleBtn.BackColor = Color.Lime;
             config.mouseAction = 3;
         }
 
         private void MouseDragClick(object sender, EventArgs e)
         {
+            ColorReset();
+            MouseDragBtn.BackColor = Color.Lime;
             config.mouseAction = 4;
         }
 
