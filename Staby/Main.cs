@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Timers;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,25 +14,21 @@ namespace Staby
     {
         public Config config;
         public Overlay overlay = new Overlay();
-        private List<Point> linePoints = new List<Point>();
-        private List<Point> smoothPoints = new List<Point>();
+        private List<Point> LinePoints = new List<Point>();
+        private List<Point> SmoothPoints = new List<Point>();
+
         private readonly System.Timers.Timer lineSmoothingTimer = new System.Timers.Timer();
         private readonly System.Timers.Timer lineProcessingTimer = new System.Timers.Timer();
+        private System.Timers.Timer TimerBeforeClick = new System.Timers.Timer();
 
-        private System.Timers.Timer testTimer = new System.Timers.Timer();
         public bool sotOn = false;
-        public int virtualWidth = GetSystemMetrics(78);
-        public int virtualHeight = GetSystemMetrics(79);
-        public int virtualLeft = GetSystemMetrics(76);
-        public int virtualTop = GetSystemMetrics(77);
         public bool smoothingOn = false;
         public bool isDrawing = false;
         public bool mouseMoving = false;
         private Point position = new Point(0, 0);
         private Point lastPosition = new Point(0, 0);
         private bool isDrag = false;
-        private int i = 0;
-
+        public int i = 0;
         public Main()
         {
             InitializeComponent();
@@ -53,8 +48,8 @@ namespace Staby
             MouseHook.Start();
             MouseHook.MouseMoveHooked += new EventHandler(MouseMoveHandler);
 
-            testTimer.Elapsed += OnTimedEvent;
-            testTimer.AutoReset = false;
+            TimerBeforeClick.Elapsed += OnTimedEvent;
+            TimerBeforeClick.AutoReset = false;
 
             // Mouse smoothing updater
             lineSmoothingTimer.Elapsed += new ElapsedEventHandler(LineSmoothingUpdate);
@@ -104,16 +99,16 @@ namespace Staby
         {
             try
             {
-                if (linePoints.Count > 3)
+                if (LinePoints.Count > 3)
                 {
                     int sX;
                     int sY;
                     double[] a = new double[5];
                     double[] b = new double[5];
-                    Point p1 = linePoints[0];
-                    Point p2 = linePoints[1];
-                    Point p3 = linePoints[2];
-                    Point p4 = linePoints[3];
+                    Point p1 = LinePoints[0];
+                    Point p2 = LinePoints[1];
+                    Point p3 = LinePoints[2];
+                    Point p4 = LinePoints[3];
 
                     a[0] = (-p1.X + 3 * p2.X - 3 * p3.X + p4.X) / 6.0;
                     a[1] = (3 * p1.X - 6 * p2.X + 3 * p3.X) / 6.0;
@@ -124,7 +119,7 @@ namespace Staby
                     b[2] = (-3 * p1.Y + 3 * p3.Y) / 6.0;
                     b[3] = (p1.Y + 4 * p2.Y + p3.Y) / 6.0;
 
-                    smoothPoints.Add(new Point((int)a[3], (int)b[3]));
+                    SmoothPoints.Add(new Point((int)a[3], (int)b[3]));
 
                     for (i = 1; i <= config.smoothingInterpolation - 1; i++)
                     {
@@ -132,16 +127,16 @@ namespace Staby
 
                         sX = (int)((a[2] + t * (a[1] + t * a[0])) * t + a[3]);
                         sY = (int)((b[2] + t * (b[1] + t * b[0])) * t + b[3]);
-                        if (smoothPoints.Last<Point>() != new Point(sX, sY))
+                        if (SmoothPoints.Last<Point>() != new Point(sX, sY))
                         {
-                            smoothPoints.Add(new Point(sX, sY));
+                            SmoothPoints.Add(new Point(sX, sY));
                         }
                     }
-                    linePoints.RemoveAt(0);
+                    LinePoints.RemoveAt(0);
                 }
                 else if (MouseHook.GetCursorPosition() != position && isDrawing)
                 {
-                    linePoints.Add(position);
+                    LinePoints.Add(position);
                 }
             }
             catch
@@ -167,20 +162,20 @@ namespace Staby
             try
             {
                 // Begin smoothing only if we have points to work with and if drawing
-                if (smoothPoints.Count > 0 && isDrawing)
+                if (SmoothPoints.Count > 0 && isDrawing)
                 {
                     if (config.disableCatchUp)
                     {
                         if (mouseMoving)
                         {
-                            MouseHook.SetCursorPos(smoothPoints[0].X, smoothPoints[0].Y);
-                            smoothPoints.RemoveAt(0);
+                            MouseHook.SetCursorPos(SmoothPoints[0].X, SmoothPoints[0].Y);
+                            SmoothPoints.RemoveAt(0);
                         }
                     }
                     else
                     {
-                        MouseHook.SetCursorPos(smoothPoints[0].X, smoothPoints[0].Y);
-                        smoothPoints.RemoveAt(0);
+                        MouseHook.SetCursorPos(SmoothPoints[0].X, SmoothPoints[0].Y);
+                        SmoothPoints.RemoveAt(0);
                     }
                 }
             }
@@ -191,7 +186,7 @@ namespace Staby
 
             if (!isDrawing)
             {
-                smoothPoints.Clear();
+                SmoothPoints.Clear();
                 lineSmoothingTimer.Stop();
                 if (!config.snapToCursor) MouseHook.SetCursorPos(guidePos.X, guidePos.Y);
                 MouseHook.moveEnabled = true;
@@ -200,10 +195,10 @@ namespace Staby
 
         private void MouseMoveHandler(object sender, EventArgs e)
         {
-            testTimer.Enabled = false;
+            TimerBeforeClick.Enabled = false;
             overlay.cursorPos = MouseHook.GetCursorPosition();
             overlay.Invalidate();
-            testTimer.Enabled = true;
+            TimerBeforeClick.Enabled = true;
         }
 
         private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
@@ -241,7 +236,7 @@ namespace Staby
                 }
             }
 
-            testTimer.Stop();
+            TimerBeforeClick.Stop();
         }
 
         protected override void WndProc(ref Message m)
@@ -287,10 +282,10 @@ namespace Staby
             {
                 // On
                 button_smoothOnOff.BackColor = Color.Lime;
-                linePoints.Clear();
-                smoothPoints.Clear();
+                LinePoints.Clear();
+                SmoothPoints.Clear();
                 position = MouseHook.GetCursorPosition();
-                smoothPoints.Add(position);
+                SmoothPoints.Add(position);
                 MouseHook.moveEnabled = false;
                 isDrawing = true;
                 lineProcessingTimer.Start();
@@ -344,9 +339,9 @@ namespace Staby
 
                 TopMost = false;
                 overlay.TopMost = false;
-                config.stayOnTop = false;
-
+                config.sotOn = false;
                 sotOn = true;
+
             }
             //off
             else
@@ -355,9 +350,9 @@ namespace Staby
 
                 TopMost = true;
                 overlay.TopMost = true;
-                config.stayOnTop = true;
-
+                config.sotOn = true;
                 sotOn = false;
+
             }
         }
         
@@ -379,12 +374,6 @@ namespace Staby
         {
             config.SaveConfig();
             MessageBox.Show("Configuration settings saved to: Staby.config", "Staby", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void ToolStripMenuItem_restoreDefaults_Click(object sender, EventArgs e)
-        {
-            config.LoadConfig(true);
-            MessageBox.Show("Default settings restored.", "Staby", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void ToolStripMenuItem_exit_Click(object sender, EventArgs e)
@@ -464,6 +453,18 @@ namespace Staby
             ColorReset();
             MouseLeftBtn.BackColor = Color.Lime;
             config.mouseAction = 1;
+        }
+
+        private void ToolStripMenuItem_help_Click(object sender, EventArgs e)
+        {
+            if (Application.OpenForms.OfType<Help>().Count() != 1)
+            {
+                Help help = new Help();
+                help.Owner = this;
+                help.MinimizeBox = false;
+                help.MaximizeBox = false;
+                help.Show();
+            }
         }
 
         private void MouseRightClick(object sender, EventArgs e)

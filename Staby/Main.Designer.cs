@@ -33,9 +33,9 @@
             this.menu = new System.Windows.Forms.MenuStrip();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_saveConfig = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItem_restoreDefaults = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripMenuItem_exit = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_help = new System.Windows.Forms.ToolStripMenuItem();
             this.trackBar_smoothingPower = new System.Windows.Forms.TrackBar();
             this.textBox_smoothingPower = new System.Windows.Forms.TextBox();
             this.toolTip_smoothingOnOff = new System.Windows.Forms.ToolTip(this.components);
@@ -58,7 +58,8 @@
             // menu
             // 
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.testToolStripMenuItem});
+            this.testToolStripMenuItem,
+            this.ToolStripMenuItem_help});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.Size = new System.Drawing.Size(133, 24);
@@ -68,7 +69,6 @@
             // 
             this.testToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItem_saveConfig,
-            this.ToolStripMenuItem_restoreDefaults,
             this.toolStripSeparator2,
             this.ToolStripMenuItem_exit});
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
@@ -82,13 +82,6 @@
             this.ToolStripMenuItem_saveConfig.Text = "Save Config";
             this.ToolStripMenuItem_saveConfig.Click += new System.EventHandler(this.ToolStripMenuItem_saveConfig_Click);
             // 
-            // ToolStripMenuItem_restoreDefaults
-            // 
-            this.ToolStripMenuItem_restoreDefaults.Name = "ToolStripMenuItem_restoreDefaults";
-            this.ToolStripMenuItem_restoreDefaults.Size = new System.Drawing.Size(180, 22);
-            this.ToolStripMenuItem_restoreDefaults.Text = "Restore Defaults";
-            this.ToolStripMenuItem_restoreDefaults.Click += new System.EventHandler(this.ToolStripMenuItem_restoreDefaults_Click);
-            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -100,6 +93,13 @@
             this.ToolStripMenuItem_exit.Size = new System.Drawing.Size(180, 22);
             this.ToolStripMenuItem_exit.Text = "Exit";
             this.ToolStripMenuItem_exit.Click += new System.EventHandler(this.ToolStripMenuItem_exit_Click);
+            // 
+            // ToolStripMenuItem_help
+            // 
+            this.ToolStripMenuItem_help.Name = "ToolStripMenuItem_help";
+            this.ToolStripMenuItem_help.Size = new System.Drawing.Size(44, 20);
+            this.ToolStripMenuItem_help.Text = "Help";
+            this.ToolStripMenuItem_help.Click += new System.EventHandler(this.ToolStripMenuItem_help_Click);
             // 
             // trackBar_smoothingPower
             // 
@@ -254,7 +254,7 @@
             // 
             this.button_toggleDisplay.BackColor = System.Drawing.Color.Gainsboro;
             this.button_toggleDisplay.BackgroundImage = global::Staby.Properties.Resources.toggledisplay;
-            this.button_toggleDisplay.Location = new System.Drawing.Point(41, 0);
+            this.button_toggleDisplay.Location = new System.Drawing.Point(95, 0);
             this.button_toggleDisplay.Name = "button_toggleDisplay";
             this.button_toggleDisplay.Size = new System.Drawing.Size(26, 26);
             this.button_toggleDisplay.TabIndex = 5;
@@ -299,6 +299,7 @@
         private System.Windows.Forms.MenuStrip menu;
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_exit;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_help;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolTip toolTip_smoothingOnOff;
         private System.Windows.Forms.ToolTip toolTip_toggleOverScreen;
@@ -307,7 +308,6 @@
         public System.Windows.Forms.Button button_smoothOnOff;
         public System.Windows.Forms.Button button_toggleDisplay;
         public System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_saveConfig;
-        public System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_restoreDefaults;
         public System.Windows.Forms.TextBox textBox_smoothingPower;
         public System.Windows.Forms.Button StabilizationBtn;
         public System.Windows.Forms.Button MouseResetBtn;
